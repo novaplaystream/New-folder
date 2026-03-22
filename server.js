@@ -87,7 +87,6 @@ app.post("/api/generate", upload.single("image"), async (req, res) => {
 
     const startJson = safeJson(startText);
 
-    // Optional polling flow
     const pollUrlTemplate = process.env.VIDEO_API_POLL_URL_TEMPLATE || "";
     if (pollUrlTemplate) {
       const jobIdPath = process.env.VIDEO_API_JOB_ID_PATH || "id";
@@ -136,7 +135,7 @@ app.post("/api/generate", upload.single("image"), async (req, res) => {
         }
       }
 
-      return res.status(504).json({ error: "Timeout waiting for video." });
+      return res.status(504).json({ error: "Timeout waiting for media." });
     }
 
     const videoUrlPath = process.env.VIDEO_API_RESPONSE_VIDEO_URL_PATH || "videoUrl";
