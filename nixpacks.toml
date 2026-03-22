@@ -1,0 +1,9 @@
+﻿[phases.setup]
+# Ensure Node is available
+nixPkgs = ["nodejs_20", "npm"]
+
+[phases.build]
+cmds = ["npm install"]
+
+[start]
+cmd = "npm start"
