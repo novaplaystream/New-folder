@@ -4,6 +4,7 @@ const videoEl = document.getElementById("video");
 const imageEl = document.getElementById("imageResult");
 const emptyEl = document.getElementById("emptyState");
 const progressBar = document.getElementById("progressBar");
+const providerSelect = document.getElementById("provider");
 
 function showMedia(type, url) {
   videoEl.style.display = "none";
@@ -22,6 +23,28 @@ function showMedia(type, url) {
 
 function setProgress(value) {
   progressBar.style.width = `${value}%`;
+}
+
+async function loadProviders() {
+  try {
+    const res = await fetch("/api/providers");
+    const data = await res.json();
+    if (!res.ok || !data.providers) return;
+
+    const existing = new Set([
+      ...Array.from(providerSelect.options).map((opt) => opt.value)
+    ]);
+
+    data.providers.forEach((p) => {
+      if (existing.has(p.key)) return;
+      const opt = document.createElement("option");
+      opt.value = p.key;
+      opt.textContent = p.name || p.key;
+      providerSelect.appendChild(opt);
+    });
+  } catch {
+    // ignore
+  }
 }
 
 const presetButtons = document.querySelectorAll(".presets button");
@@ -58,14 +81,14 @@ form.addEventListener("submit", async (event) => {
 
     if (data.imageUrl) {
       showMedia("image", data.imageUrl);
-      statusEl.textContent = "Done (image).";
+      statusEl.textContent = `Done (image) • ${data.provider || "Provider"}`;
       setProgress(100);
       return;
     }
 
     if (data.videoUrl) {
       showMedia("video", data.videoUrl);
-      statusEl.textContent = "Done (video).";
+      statusEl.textContent = `Done (video) • ${data.provider || "Provider"}`;
       setProgress(100);
       return;
     }
@@ -77,3 +100,5 @@ form.addEventListener("submit", async (event) => {
     emptyEl.style.display = "block";
   }
 });
+
+loadProviders();

@@ -76,13 +76,20 @@
               ></textarea>
             </label>
 
-            <div class="two-col">
+            <div class="three-col">
               <label class="field">
                 <span>Mode</span>
                 <select id="mode" name="mode">
                   <option value="text">Text → Video</option>
                   <option value="image">Image → Video</option>
                   <option value="text-image">Text → Image</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Provider</span>
+                <select id="provider" name="provider">
+                  <option value="auto">Auto (Fallback)</option>
                 </select>
               </label>
 
@@ -109,7 +116,7 @@
           <div class="chips">
             <span>Fast Setup</span>
             <span>Premium UI</span>
-            <span>Flexible API</span>
+            <span>Multi‑Provider</span>
           </div>
           <div class="progress">
             <div class="progress-bar" id="progressBar"></div>
@@ -130,7 +137,7 @@
       </section>
 
       <section class="note">
-        <strong>Tip:</strong> Configure your API in <code>.env</code> and deploy on Railway.
+        <strong>Tip:</strong> Add multiple providers in <code>.env</code>. Auto mode will switch when a provider returns 402/429.
       </section>
     </main>
 
