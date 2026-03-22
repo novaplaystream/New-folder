@@ -7,31 +7,63 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
+    <div class="bg-grid"></div>
     <main class="page">
+      <nav class="nav">
+        <div class="logo">Nova</div>
+        <div class="nav-right">
+          <span class="chip">Low‑end PC friendly</span>
+          <span class="chip">API‑Powered</span>
+        </div>
+      </nav>
+
       <header class="hero">
         <div class="hero-left">
-          <div class="pill">Premium Demo • Free API Plug‑in</div>
-          <h1>Nova Video Lab</h1>
+          <div class="pill">Premium Studio</div>
+          <h1>Text & Image to <span>Video</span> + Text to <span>Image</span></h1>
           <p>
-            Create cinematic clips or high‑quality images from text or a reference
-            image. Runs on a low‑end PC by offloading heavy work to your API.
+            Cinematic results without heavy hardware. Generate from text, animate a
+            still image, or create a premium image — all via your chosen API.
           </p>
+          <div class="hero-actions">
+            <button class="ghost">View Samples</button>
+            <button class="ghost">API Ready</button>
+          </div>
         </div>
         <div class="hero-right">
           <div class="orb"></div>
-          <div class="hero-card">
-            <div class="hero-title">Generation Queue</div>
-            <div class="hero-row">
+          <div class="glass-card">
+            <div class="glass-title">Generation Queue</div>
+            <div class="glass-row">
               <span>Avg. Time</span>
-              <strong>40‑90s</strong>
+              <strong>45‑90s</strong>
             </div>
-            <div class="hero-row">
-              <span>Quality</span>
+            <div class="glass-row">
+              <span>Quality Tier</span>
               <strong>Premium</strong>
+            </div>
+            <div class="glass-row">
+              <span>Provider</span>
+              <strong>Custom</strong>
             </div>
           </div>
         </div>
       </header>
+
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-label">Modes</div>
+          <div class="stat-value">3</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Flexible JSON</div>
+          <div class="stat-value">100%</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Deploy</div>
+          <div class="stat-value">Railway</div>
+        </div>
+      </section>
 
       <section class="grid">
         <div class="card">
@@ -42,23 +74,32 @@
                 name="prompt"
                 id="prompt"
                 rows="5"
-                placeholder="Example: A neon-lit city drifting through fog, cinematic, 4k"
+                placeholder="Example: a neon rainforest with drifting fog, ultra cinematic"
               ></textarea>
             </label>
 
-            <label class="field">
-              <span>Image (optional for image-to-video)</span>
-              <input type="file" id="image" name="image" accept="image/*" />
-            </label>
+            <div class="two-col">
+              <label class="field">
+                <span>Mode</span>
+                <select id="mode" name="mode">
+                  <option value="text">Text → Video</option>
+                  <option value="image">Image → Video</option>
+                  <option value="text-image">Text → Image</option>
+                </select>
+              </label>
 
-            <label class="field">
-              <span>Mode</span>
-              <select id="mode" name="mode">
-                <option value="text">Text → Video</option>
-                <option value="image">Image → Video</option>
-                <option value="text-image">Text → Image</option>
-              </select>
-            </label>
+              <label class="field">
+                <span>Reference Image</span>
+                <input type="file" id="image" name="image" accept="image/*" />
+              </label>
+            </div>
+
+            <div class="presets">
+              <button type="button" data-preset="Cinematic, 4k, slow motion, moody lighting">Cinematic</button>
+              <button type="button" data-preset="Studio product shot, soft light, ultra detailed">Product</button>
+              <button type="button" data-preset="Anime style, vivid colors, dynamic">Anime</button>
+              <button type="button" data-preset="Futuristic city, rain, neon reflections">Neon City</button>
+            </div>
 
             <button class="btn" type="submit">Generate</button>
           </form>
@@ -69,8 +110,11 @@
           <div class="status" id="status">Ready.</div>
           <div class="chips">
             <span>Fast setup</span>
-            <span>Railway ready</span>
-            <span>API flexible</span>
+            <span>Premium UI</span>
+            <span>Flexible API</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
           </div>
         </div>
       </section>
@@ -78,11 +122,12 @@
       <section class="card result" id="resultCard">
         <div class="result-header">
           <h2>Result</h2>
-          <span class="result-hint">Your output will appear here</span>
+          <span class="result-hint">Output shows here after generation</span>
         </div>
         <div class="media-wrap">
           <video id="video" controls></video>
           <img id="imageResult" alt="Generated result" />
+          <div class="empty" id="emptyState">No output yet</div>
         </div>
       </section>
 
